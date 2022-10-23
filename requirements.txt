@@ -1,0 +1,2 @@
+inquirerpy~=0.3.4
+pymongo~=4.3.2
