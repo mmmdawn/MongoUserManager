@@ -1,11 +1,4 @@
-import sys
 import setuptools
-
-# try:
-#     import mymongo
-# except ImportError:
-#     print("error: pywal requires Python 3.8 or greater.")
-#     sys.exit(1)
 
 setuptools.setup(
     name="mymongo",
