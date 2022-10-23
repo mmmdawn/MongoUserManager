@@ -1,7 +1,7 @@
 from copy import copy
 
 from pymongo import MongoClient
-from constants import MongoConstants
+from mymongo.constants import MongoConstants
 
 
 class Mongodb:

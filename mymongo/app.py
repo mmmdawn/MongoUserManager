@@ -1,8 +1,9 @@
-from database.mongodb import Mongodb
-from utils.print_utils import *
+from . import Mongodb
+from . import DB_ROLES, ALL_DB_ROLES, SUPERUSER_ROLES
+from . import get_roles_msg, clear
+
 from InquirerPy import inquirer
 from InquirerPy.base.control import Choice, Separator
-from constants import DB_ROLES, ALL_DB_ROLES, SUPERUSER_ROLES
 
 
 class App:
