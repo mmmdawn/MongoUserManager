@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name="mymongo",
+    name="mongo-user-manager",
     version="0.0.1",
     author="Dawn",
     author_email="congminh292k@gmail.com",
@@ -15,7 +15,11 @@ setuptools.setup(
         "Operating System :: POSIX :: Linux",
         "Topic :: Database"
     ],
-    packages=["mymongo"],
-    entry_points={"console_scripts": ["mymongo=mymongo.__main__:main"]},
-    python_requires=">=3.8"
+    dependencies=[
+        "inquirerpy ~= 0.3.4",
+        "pymongo ~= 4.3.2",
+    ],
+    packages=["mymongo", "mymongo.database", "mymongo.utils"],
+    entry_points={"console_scripts": ["mun=mymongo.__main__:main"]},
+    python_requires=">=3.8",
 )
