@@ -1,2 +1,5 @@
-# MongoUserManager
-tool for managing mongodb user
+# Install
+`pip install mongo-user-manager`.
+
+# Usage
+Use command `mun`.
