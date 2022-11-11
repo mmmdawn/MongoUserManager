@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="mongo-user-manager",
-    version="0.0.1",
+    version="0.0.2",
     author="Dawn",
     author_email="congminh292k@gmail.com",
     description="MongoDB utilities",

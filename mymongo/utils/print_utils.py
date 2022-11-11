@@ -15,3 +15,7 @@ def clear():
         _ = system('cls')
     else:
         _ = system('clear')
+
+
+def press_any_key():
+    input('\nPress any key to continue . . .')
