@@ -72,11 +72,5 @@ class Mongodb:
     def _get_database_names(self) -> list:
         return self._client.list_database_names()
 
-
-
-
-if __name__ == '__main__':
-    connection_url = "mongodb://dev:local@loclhost:27017"
-    db = Mongodb(connection_url)
-    # print(db.create_user('mmmdawn', [{'role': 'root', 'db': 'admin'}], '123123123'))
-    print(db.users)
+    def close_connection(self):
+        self._client.close()

@@ -9,12 +9,8 @@ from InquirerPy.base.control import Choice, Separator
 
 class App:
     def __init__(self):
-        self.db = None
-
-    def connect(self):
         connection_uri = inquirer.text(message='Connection URI:').execute()
         self.db: Mongodb = Mongodb(connection_uri)
-        print('Connection established')
 
     @endless_function
     def home(self) -> bool:
@@ -163,5 +159,9 @@ class App:
             return "Cancelled"
 
     def run(self):
-        self.connect()
-        self.home()
+        try:
+            self.home()
+        except Exception as ex:
+            print(ex)
+        finally:
+            self.db.close_connection()
