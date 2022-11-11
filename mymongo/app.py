@@ -1,6 +1,7 @@
 from . import Mongodb
 from . import DB_ROLES, ALL_DB_ROLES, SUPERUSER_ROLES
-from . import get_roles_msg, clear
+from . import get_roles_msg, clear, press_any_key
+from . import endless_function
 
 from InquirerPy import inquirer
 from InquirerPy.base.control import Choice, Separator
@@ -13,60 +14,59 @@ class App:
     def connect(self):
         connection_uri = inquirer.text(message='Connection URI:').execute()
         self.db: Mongodb = Mongodb(connection_uri)
+        print('Connection established')
 
-    def home(self) -> None:
-        while True:
-            clear()
-            choice = inquirer.fuzzy(
-                message="Select:",
+    @endless_function
+    def home(self) -> bool:
+        clear()
+        choice = inquirer.fuzzy(
+            message="Select:",
+            choices=[
+                Choice(value=None, name="Create new account"),
+                'Exit',
+                *self.db.users,
+            ],
+            default=None,
+        ).execute()
+        clear()
+
+        if choice == 'Exit':
+            print('\nBye')
+            return False
+
+        if choice:
+            username = choice
+            roles = self.db.users[username]
+            print(get_roles_msg(username, roles))
+            action = inquirer.select(
+                message='Choose action:',
                 choices=[
-                    Choice(value=None, name="Create new account"),
-                    'Exit',
-                    *self.db.users,
-                ],
-                default=None,
+                    'Add role',
+                    'Remove role',
+                    Separator(),
+                    'Change password',
+                    'Drop user',
+                    Separator(),
+                    'Back'
+                ]
             ).execute()
-            clear()
 
-            if choice:
-                if choice == 'Exit':
-                    print('\nBye\n')
-                    input('\nPress any key to continue . . .')
-                    break
-
-                username = choice
-                roles = self.db.users[username]
-                print(get_roles_msg(username, roles))
-                action = inquirer.select(
-                    message='Choose action:',
-                    choices=[
-                        'Add role',
-                        'Remove role',
-                        Separator(),
-                        'Change password',
-                        'Drop user',
-                        Separator(),
-                        'Back'
-                    ]
-                ).execute()
-
-                if action == 'Change password':
-                    print(self.change_password(username))
-                    input('\nPress any key to continue . . .')
-                if action == 'Add role':
-                    print(self.add_role(username))
-                    input('\nPress any key to continue . . .')
-                if action == 'Remove role':
-                    print(self.remove_role(username))
-                    input('\nPress any key to continue . . .')
-                if action == 'Drop user':
-                    print(self.drop_user(username))
-                    input('\nPress any key to continue . . .')
-                if action == 'Back':
-                    continue
-            else:
-                print(self.create_user())
-                input('\nPress any key to continue . . .')
+            if action == 'Change password':
+                print(self.change_password(username))
+                press_any_key()
+            if action == 'Add role':
+                print(self.add_role(username))
+                press_any_key()
+            if action == 'Remove role':
+                print(self.remove_role(username))
+                press_any_key()
+            if action == 'Drop user':
+                print(self.drop_user(username))
+                press_any_key()
+        else:
+            print(self.create_user())
+            press_any_key()
+        return True
 
     def create_user(self):
         try_time = 1
@@ -84,7 +84,6 @@ class App:
             if password != confirm_password:
                 print('\nNot match\n')
                 try_time += 1
-                continue
             else:
                 break
 
@@ -111,7 +110,6 @@ class App:
             if password != confirm_password:
                 print('\nNot match\n')
                 try_time += 1
-                continue
             else:
                 break
 
