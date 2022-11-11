@@ -124,7 +124,8 @@ class App:
         ).execute()
 
         if role in DB_ROLES:
-            dbs = inquirer.select(message='Select database(s)', choices=self.db.dbs, multiselect=True).execute()
+            dbs = inquirer.select(message='💡 Press <Tab> to choose more than one!\nSelect database(s): ',
+                                  choices=self.db.dbs, multiselect=True).execute()
             new_roles = [{'role': role, 'db': db} for db in dbs]
         else:
             new_roles = [role]
