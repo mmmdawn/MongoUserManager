@@ -2,4 +2,4 @@
 `pip install mongo-user-manager`
 
 # Usage
-Use command `mun`
+Use command `mun` (need of installing some additional dependencies)
